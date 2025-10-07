@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>untitled</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <jakarta.version>9.1.0</jakarta.version>
+        <liberty.plugin.version>3.7.1</liberty.plugin.version>
+    </properties>
+
+    <dependencies>
+        <!-- Use the Jakarta EE web API as provided by the server -->
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>${jakarta.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- If you want Jersey specifically (optional) - Jersey 3.x is Jakarta-based -->
+        <!--
+        <dependency>
+          <groupId>org.glassfish.jersey.containers</groupId>
+          <artifactId>jersey-container-servlet-core</artifactId>
+          <version>3.1.0</version>
+        </dependency>
+        <dependency>
+          <groupId>org.glassfish.jersey.media</groupId>
+          <artifactId>jersey-media-json-jackson</artifactId>
+          <version>3.1.0</version>
+        </dependency>
+        -->
+    </dependencies>
+    <build>
+        <plugins>
+            <!-- Liberty Maven plugin: dev mode + copy JDBC driver into server config -->
+            <plugin>
+                <groupId>io.openliberty.tools</groupId>
+                <artifactId>liberty-maven-plugin</artifactId>
+                <version>${liberty.plugin.version}</version>
+                <configuration>
+                    <serverName>defaultServer</serverName>
+                    <configDirectory>src/main/liberty/config</configDirectory>
+
+                    <!-- copyDependencies: copy the Oracle JDBC artifact into server config/jdbc -->
+                    <copyDependencies>
+                        <dependencyGroup>
+                            <location>jdbc</location>
+                            <!-- Pick the Oracle JDBC artifact you need (ojdbc11 for Java 11+) -->
+                            <dependency>
+                                <groupId>com.oracle.database.jdbc</groupId>
+                                <artifactId>ojdbc11</artifactId>
+                                <version>24.1.0.0</version> <!-- replace with the version you want -->
+                            </dependency>
+                        </dependencyGroup>
+                    </copyDependencies>
+
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
