@@ -10,15 +10,14 @@
 
     <httpEndpoint id="defaultHttpEndpoint" httpPort="9080" httpsPort="9443"/>
 
-    <!-- Oracle JDBC driver (copied by liberty-maven-plugin into ${server.config.dir}/jdbc) -->
-    <library id="OracleJDBC">
-        <fileset dir="${server.config.dir}/jdbc" includes="ojdbc11.jar"/>
+    <library id="PostgresJDBC">
+        <fileset dir="${server.config.dir}/jdbc" includes="postgresql*.jar"/>
     </library>
 
-    <jdbcDriver id="OracleJDBCDriver" libraryRef="OracleJDBC"/>
+    <jdbcDriver id="PostgresJDBCDriver" libraryRef="PostgresJDBC"/>
 
     <!-- DataSource JNDI name used by persistence.xml -->
-    <dataSource id="OracleDS" jndiName="jdbc/OracleDS" jdbcDriverRef="OracleJDBCDriver">
-        <properties URL="jdbc:oracle:thin:@//localhost:1521/ORCLCDB" user="APPUSER" password="APP_PASSWORD"/>
+    <dataSource id="PostgresDS" jndiName="jdbc/PostgresDS" jdbcDriverRef="PostgresJDBCDriver">
+        <properties URL="jdbc:postgresql://localhost:5432/liberty-test-db" user="aki" password="akipassword"/>
     </dataSource>
 </server>
