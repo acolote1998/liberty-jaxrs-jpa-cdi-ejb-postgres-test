@@ -24,6 +24,12 @@
             <version>${jakarta.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.3</version>
+        </dependency>
+
 
         <!-- If you want Jersey specifically (optional) - Jersey 3.x is Jakarta-based -->
         <!--
