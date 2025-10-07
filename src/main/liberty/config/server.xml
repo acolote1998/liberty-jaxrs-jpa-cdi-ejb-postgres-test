@@ -1,0 +1,24 @@
+<server>
+    <featureManager>
+        <!-- Jakarta RESTful (modern Jakarta namespace), CDI, EJB, JPA, JDBC -->
+        <feature>restfulWS-3.0</feature>
+        <feature>cdi-4.0</feature>
+        <feature>ejb-3.2</feature>
+        <feature>persistence-3.0</feature>
+        <feature>jdbc-4.3</feature>
+    </featureManager>
+
+    <httpEndpoint id="defaultHttpEndpoint" httpPort="9080" httpsPort="9443"/>
+
+    <!-- Oracle JDBC driver (copied by liberty-maven-plugin into ${server.config.dir}/jdbc) -->
+    <library id="OracleJDBC">
+        <fileset dir="${server.config.dir}/jdbc" includes="ojdbc11.jar"/>
+    </library>
+
+    <jdbcDriver id="OracleJDBCDriver" libraryRef="OracleJDBC"/>
+
+    <!-- DataSource JNDI name used by persistence.xml -->
+    <dataSource id="OracleDS" jndiName="jdbc/OracleDS" jdbcDriverRef="OracleJDBCDriver">
+        <properties URL="jdbc:oracle:thin:@//localhost:1521/ORCLCDB" user="APPUSER" password="APP_PASSWORD"/>
+    </dataSource>
+</server>
